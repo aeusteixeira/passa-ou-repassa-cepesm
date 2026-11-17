@@ -3,6 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#15100B">
+<meta name="description" content="Passa ou Repassa da Consciência Negra do CEPESM">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="icon-192.png">
 <style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>Passa ou Repassa da Consciência Negra</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -297,6 +302,17 @@ button { font: inherit; color: inherit; }
 }
 .check input:checked + .box { background: var(--ink); border-color: var(--ink); color: var(--bg); }
 .setup-hint { font-size: max(13px, 0.9cqw); color: var(--muted); }
+.offline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 20px;
+  padding-top: max(14px, 1.2cqw);
+  border-top: 1px solid var(--line);
+}
+.offline-text { flex: 1 1 16rem; min-width: 0; font-size: max(14px, 1cqw); font-weight: 700; }
+.offline-text[data-state="ready"] { color: var(--ok-text); }
 
 /* ---------- Placar ---------- */
 .stage { display: flex; flex-direction: column; gap: max(14px, 1.4cqw); padding-block: max(14px, 1.5cqw) max(16px, 1.4cqw); }
@@ -584,6 +600,10 @@ button { font: inherit; color: inherit; }
         </div>
         <button class="btn pri big" id="btn-start" type="button">Começar o jogo</button>
         <p class="setup-hint">Segundos em 0 desliga o cronômetro. Teclas no jogo: 1 e 2 marcam a equipe, A B C D a resposta, P passa, R repete a pergunta.</p>
+        <div class="offline" id="offline" hidden>
+          <p class="offline-text" id="offline-status"></p>
+          <button class="btn" id="btn-install" type="button" hidden>Instalar o jogo</button>
+        </div>
       </div>
     </div>
   </section>
@@ -1284,6 +1304,43 @@ function start(saved) {
 }
 window.claude?.hot?.snapshot?.(() => S);
 window.claude?.hot?.ready ? window.claude.hot.ready(start) : start(window.claude?.hot?.data ?? {});
+</script>
+<script>
+(function () {
+  var box = document.getElementById("offline");
+  var status = document.getElementById("offline-status");
+  var install = document.getElementById("btn-install");
+  var TOTAL = 60;
+  function say(text, ready) { box.hidden = false; status.textContent = text; status.dataset.state = ready ? "ready" : ""; }
+  if (!("serviceWorker" in navigator) || location.protocol === "file:") return;
+  say("Salvando o jogo e os áudios neste aparelho para funcionar sem internet...");
+  function check() {
+    if (!window.caches) return;
+    caches.keys().then(function (keys) {
+      var key = keys.filter(function (k) { return k.indexOf("passa-ou-repassa-") === 0; }).pop();
+      if (!key) return;
+      return caches.open(key).then(function (c) { return c.keys(); }).then(function (reqs) {
+        var n = reqs.filter(function (r) { return /\/audio\/.*\.mp3$/.test(r.url); }).length;
+        if (n >= TOTAL) say("Pronto para jogar sem internet: jogo e " + n + " áudios salvos neste aparelho.", true);
+        else say("Salvando para jogar sem internet: " + n + " de " + TOTAL + " áudios...");
+      });
+    }).catch(function () {});
+  }
+  navigator.serviceWorker.register("sw.js").then(function () {
+    navigator.serviceWorker.ready.then(check);
+  }).catch(function () { say("Este navegador não deixou salvar o jogo para usar sem internet."); });
+  navigator.serviceWorker.addEventListener("message", function (e) { if (e.data === "cached") check(); });
+  var timer = setInterval(check, 1500);
+  setTimeout(function () { clearInterval(timer); }, 120000);
+  var deferred = null;
+  window.addEventListener("beforeinstallprompt", function (e) { e.preventDefault(); deferred = e; install.hidden = false; box.hidden = false; });
+  install.addEventListener("click", function () {
+    if (!deferred) return;
+    deferred.prompt();
+    deferred.userChoice.finally(function () { deferred = null; install.hidden = true; });
+  });
+  window.addEventListener("appinstalled", function () { install.hidden = true; });
+})();
 </script>
 </body>
 </html>
