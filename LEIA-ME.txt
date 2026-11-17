@@ -2,8 +2,21 @@ PASSA OU REPASSA DA CONSCIÊNCIA NEGRA
 CEPESM - Colégio Estadual Professora Evangelina Soares de Moura
 
 COMO ABRIR
-Dê dois cliques em index.html. Funciona sem internet (as fontes ficam um pouco
-diferentes offline). Use o Chrome ou o Edge e ligue o som do computador na caixa.
+Pela internet: https://aeusteixeira.github.io/passa-ou-repassa-cepesm/
+Use o Chrome ou o Edge e ligue o som do computador na caixa.
+
+SEM INTERNET NO DIA
+1. Num dia antes, com internet, abra o link acima no computador do evento.
+2. Espere aparecer, embaixo do botão "Começar o jogo", a mensagem
+   "Pronto para jogar sem internet: jogo e 60 áudios salvos neste aparelho".
+3. Se aparecer o botão "Instalar o jogo", clique: ele vira um app com ícone
+   próprio, que abre em tela cheia.
+4. No dia, abra o app (ou o mesmo link no mesmo navegador). Funciona sem internet,
+   com os áudios.
+Não use aba anônima: ela apaga o que foi salvo.
+
+Outra opção é copiar esta pasta para o computador e dar dois cliques em index.html.
+Também funciona sem internet com os áudios; só as fontes ficam diferentes.
 
 COMO JOGAR
 1. Na primeira tela, escreva o nome das duas equipes e clique em "Começar o jogo".

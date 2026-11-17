@@ -1,0 +1,1295 @@
+<title>Passa ou Repassa da Consciência Negra</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800;900&family=Big+Shoulders+Display:wght@700;800;900&display=swap">
+<style>
+/* Layout: palco de auditório para projetor 16:9. Faixa kente no topo, placar com as
+   duas equipes e o cronômetro, pergunta grande, alternativas em selos de losango e,
+   embaixo, o painel do apresentador separado do que é para a plateia. */
+:root {
+  --bg: #15100B;
+  --surface: #211A13;
+  --ink: #F7EFE2;
+  --muted: #BDAF9C;
+  --line: #3A2F25;
+  --line-strong: #7A6852;
+  --deck: #0B0806;
+  --seal: #F7EFE2;
+  --seal-ink: #15100B;
+  --ta: #F5B82E;
+  --ta-ink: #1A1206;
+  --ta-text: #F5B82E;
+  --tb: #5E95FF;
+  --tb-ink: #07122B;
+  --tb-text: #8DB4FF;
+  --ok: #1C9A52;
+  --ok-text: #3FCB79;
+  --bad: #D63A2A;
+  --bad-text: #FF6E5D;
+  --on-state: #FFFFFF;
+  --pat: rgba(247, 239, 226, 0.035);
+  --k1: #C8372D;
+  --k2: #E3A21A;
+  --k3: #1E7A46;
+  --k4: #0B0806;
+  --navy: #1B2B5E;
+  --on-navy: #FFFFFF;
+  --font-display: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+  --font-body: "Archivo", "Segoe UI", Arial, sans-serif;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #F3EBDD;
+    --surface: #FFFBF3;
+    --ink: #17110B;
+    --muted: #5E5247;
+    --line: #D9CCB7;
+    --line-strong: #8E7D69;
+    --deck: #E3D6C1;
+    --seal: #17110B;
+    --seal-ink: #FFFBF3;
+    --ta: #F2B01E;
+    --ta-ink: #1A1206;
+    --ta-text: #7E5700;
+    --tb: #2F64D6;
+    --tb-ink: #FFFFFF;
+    --tb-text: #2457C5;
+    --ok: #167F45;
+    --ok-text: #116B39;
+    --bad: #C4321F;
+    --bad-text: #A82816;
+    --pat: rgba(23, 17, 11, 0.045);
+    --k2: #D9960F;
+    --k4: #17110B;
+    color-scheme: light;
+  }
+}
+:root[data-theme="light"] {
+  --bg: #F3EBDD;
+  --surface: #FFFBF3;
+  --ink: #17110B;
+  --muted: #5E5247;
+  --line: #D9CCB7;
+  --line-strong: #8E7D69;
+  --deck: #E3D6C1;
+  --seal: #17110B;
+  --seal-ink: #FFFBF3;
+  --ta: #F2B01E;
+  --ta-ink: #1A1206;
+  --ta-text: #7E5700;
+  --tb: #2F64D6;
+  --tb-ink: #FFFFFF;
+  --tb-text: #2457C5;
+  --ok: #167F45;
+  --ok-text: #116B39;
+  --bad: #C4321F;
+  --bad-text: #A82816;
+  --pat: rgba(23, 17, 11, 0.045);
+  --k2: #D9960F;
+  --k4: #17110B;
+  color-scheme: light;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  background-color: var(--bg);
+  background-image:
+    repeating-linear-gradient(45deg, var(--pat) 0 1px, transparent 1px 3vw),
+    repeating-linear-gradient(-45deg, var(--pat) 0 1px, transparent 1px 3vw);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, p, ol, fieldset { margin: 0; }
+h1:focus, h2:focus { outline: none; }
+button { font: inherit; color: inherit; }
+.display { font-family: var(--font-display); font-weight: 900; text-transform: uppercase; }
+
+.app {
+  container-type: inline-size;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Faixa kente e fileira de dentes */
+.kente {
+  flex: none;
+  height: max(10px, 1vw);
+  background: repeating-linear-gradient(90deg, var(--k1) 0 4vw, var(--k2) 4vw 8vw, var(--k3) 8vw 12vw, var(--k4) 12vw 16vw);
+}
+.teeth {
+  flex: none;
+  height: max(6px, 0.6vw);
+  background: conic-gradient(from -45deg at 50% 100%, var(--k2) 90deg, transparent 0) 0 0 / max(12px, 1.2vw) 100%;
+}
+
+.pad {
+  padding-left: max(16px, env(safe-area-inset-left, 0px), 5vw);
+  padding-right: max(16px, env(safe-area-inset-right, 0px), 5vw);
+}
+.screen { flex: 1; display: flex; flex-direction: column; }
+
+/* Brasão: selo em CSS, coberto pelo logo.png quando ele existe ao lado da página */
+.seal {
+  position: relative;
+  flex: none;
+  width: var(--size, max(52px, 4.8cqw));
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--navy);
+  border: max(2px, 0.18cqw) solid var(--on-navy);
+  box-shadow: 0 0 0 max(2px, 0.14cqw) var(--navy);
+  display: grid;
+  place-items: center;
+  color: var(--on-navy);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: calc(var(--size, max(52px, 4.8cqw)) * 0.19);
+  letter-spacing: 0.04em;
+  overflow: hidden;
+}
+.seal img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 50%; background: var(--navy); }
+
+.label {
+  font-size: max(12px, 0.85cqw);
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Botões */
+.btn {
+  height: max(50px, 3.5cqw);
+  padding: 0 max(16px, 1.5cqw);
+  display: inline-flex;
+  align-items: center;
+  border: 2px solid var(--b-bd, var(--line-strong));
+  background: var(--b-bg, transparent);
+  color: var(--b-ink, var(--ink));
+  font-weight: 800;
+  font-size: max(15px, 1.2cqw);
+  white-space: nowrap;
+  cursor: pointer;
+}
+.btn:hover { filter: brightness(1.1); }
+.btn.pri { --b-bg: var(--ink); --b-ink: var(--bg); --b-bd: var(--ink); }
+.btn.ta { --b-bg: var(--ta); --b-ink: var(--ta-ink); --b-bd: var(--ta); }
+.btn.tb { --b-bg: var(--tb); --b-ink: var(--tb-ink); --b-bd: var(--tb); }
+.btn.big {
+  height: max(60px, 4.8cqw);
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: max(24px, 2.1cqw);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.tool {
+  background: none;
+  border: 0;
+  padding: 0.25rem 0;
+  color: var(--muted);
+  font-size: max(13px, 0.85cqw);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.tool:hover { color: var(--ink); }
+.btn:focus-visible, .opt:focus-visible, .tool:focus-visible, .adj:focus-visible,
+.field-box:focus-within, .check input:focus-visible + .box {
+  outline: 3px solid var(--k2);
+  outline-offset: 3px;
+}
+
+/* ---------- Preparação ---------- */
+.setup-grid {
+  flex: 1;
+  display: grid;
+  gap: max(28px, 5cqw);
+  align-items: center;
+  padding-block: max(24px, 4cqw);
+}
+@media (min-width: 1000px) { .setup-grid { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); } }
+.intro { display: flex; flex-direction: column; gap: max(22px, 2.6cqw); min-width: 0; }
+.brand { display: flex; align-items: center; gap: max(12px, 1.2cqw); }
+.brand-text { display: flex; flex-direction: column; gap: max(4px, 0.3cqw); min-width: 0; }
+.brand-name { font-weight: 800; font-size: max(15px, 1.25cqw); line-height: 1.2; }
+.title { font-size: max(72px, 10.5cqw); line-height: 0.8; }
+.rules { list-style: none; padding: 0; display: flex; flex-direction: column; gap: max(12px, 1.2cqw); max-width: 40em; }
+.rules li { display: flex; gap: max(14px, 1.3cqw); align-items: baseline; }
+.rules .n { font-family: var(--font-display); font-weight: 900; font-size: max(30px, 2.8cqw); line-height: 0.8; color: var(--k2); }
+.rules .t { font-size: max(16px, 1.4cqw); line-height: 1.35; text-wrap: pretty; }
+
+.card {
+  background: var(--surface);
+  border: 2px solid var(--line);
+  padding: max(18px, 2.2cqw);
+  display: flex;
+  flex-direction: column;
+  gap: max(16px, 1.5cqw);
+  min-width: 0;
+}
+.resume {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 20px;
+  padding: max(14px, 1.2cqw) max(14px, 1.4cqw);
+  background: var(--deck);
+  border: 2px dashed var(--line-strong);
+}
+.resume-title { font-weight: 800; font-size: max(16px, 1.3cqw); }
+.resume-text { font-size: max(13px, 1cqw); color: var(--muted); }
+.fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: max(14px, 1.2cqw); border: 0; padding: 0; min-width: 0; }
+.fields.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.field { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.field-box {
+  height: max(54px, 4cqw);
+  border: 2px solid var(--line-strong);
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  gap: max(10px, 0.8cqw);
+  padding: 0 max(14px, 1.1cqw);
+}
+.field-box input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-weight: 800;
+  font-size: max(18px, 1.5cqw);
+  padding: 0;
+  outline: none;
+}
+.field-box input[type="number"] { font-family: var(--font-display); font-weight: 900; font-size: max(26px, 2.2cqw); }
+.field-box.team { --c: var(--ta); --c-text: var(--ta-text); border: max(3px, 0.2cqw) solid var(--c); }
+.field-box.team[data-team="b"] { --c: var(--tb); --c-text: var(--tb-text); }
+.field-box.team input { color: var(--c-text); }
+.field-box .sq { flex: none; width: max(16px, 1.1cqw); aspect-ratio: 1; background: var(--c); }
+.checks { display: flex; flex-direction: column; gap: max(10px, 0.8cqw); }
+.check { display: flex; align-items: center; gap: max(12px, 0.9cqw); min-height: 44px; cursor: pointer; font-size: max(15px, 1.2cqw); }
+.check input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.check .box {
+  flex: none;
+  width: max(26px, 1.8cqw);
+  aspect-ratio: 1;
+  border: 2px solid var(--line-strong);
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  font-size: max(16px, 1.1cqw);
+  color: transparent;
+}
+.check input:checked + .box { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+.setup-hint { font-size: max(13px, 0.9cqw); color: var(--muted); }
+.offline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 20px;
+  padding-top: max(14px, 1.2cqw);
+  border-top: 1px solid var(--line);
+}
+.offline-text { flex: 1 1 16rem; min-width: 0; font-size: max(14px, 1cqw); font-weight: 700; }
+.offline-text[data-state="ready"] { color: var(--ok-text); }
+
+/* ---------- Placar ---------- */
+.stage { display: flex; flex-direction: column; gap: max(14px, 1.4cqw); padding-block: max(14px, 1.5cqw) max(16px, 1.4cqw); }
+.board { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: max(8px, 2cqw); align-items: stretch; }
+.panel {
+  --c: var(--ta); --c-ink: var(--ta-ink); --c-text: var(--ta-text);
+  --p-bg: var(--surface); --p-name: var(--c-text); --p-score: var(--ink); --p-btn: var(--muted);
+  position: relative;
+  min-width: 0;
+  background: var(--p-bg);
+  border: max(3px, 0.25cqw) solid var(--c);
+  padding: max(10px, 1.2cqw) max(10px, 1.5cqw);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: max(6px, 0.8cqw);
+}
+.panel[data-team="b"] { --c: var(--tb); --c-ink: var(--tb-ink); --c-text: var(--tb-text); }
+.panel.is-turn { --p-bg: var(--c); --p-name: var(--c-ink); --p-score: var(--c-ink); --p-btn: var(--c-ink); }
+.panel-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; min-height: max(22px, 2.4cqw); }
+.panel-name {
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: max(15px, 2.2cqw);
+  letter-spacing: 0.02em;
+  line-height: 1;
+  color: var(--p-name);
+  overflow-wrap: anywhere;
+}
+.vez {
+  flex: none;
+  background: var(--p-name);
+  color: var(--p-bg);
+  font-family: var(--font-display);
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: max(13px, 1.6cqw);
+  letter-spacing: 0.08em;
+  line-height: 1;
+  padding: 0.22em 0.55em;
+}
+.panel-bottom { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: max(6px, 0.6cqw); }
+.panel-score {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: max(52px, 8.6cqw);
+  line-height: 0.82;
+  margin-top: max(4px, 0.4cqw);
+  color: var(--p-score);
+  font-variant-numeric: tabular-nums;
+}
+.adjs { display: flex; gap: max(4px, 0.4cqw); }
+.adj {
+  width: max(32px, 2.4cqw);
+  aspect-ratio: 1;
+  border: 2px solid var(--p-btn);
+  background: transparent;
+  color: var(--p-btn);
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: max(16px, 1.3cqw);
+  padding: 0;
+  cursor: pointer;
+}
+.sticker {
+  position: absolute;
+  top: max(-16px, -1.8cqw);
+  right: max(8px, 5cqw);
+  background: var(--ink);
+  color: var(--bg);
+  border: max(3px, 0.25cqw) solid var(--bg);
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: max(22px, 3.4cqw);
+  line-height: 1;
+  padding: 0.08em 0.3em;
+  transform: rotate(-5deg);
+}
+.mid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: max(8px, 1cqw);
+  text-align: center;
+  min-width: max(88px, 16cqw);
+}
+.mid-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: max(6px, 0.9cqw); }
+.mid-text { display: flex; flex-direction: column; gap: max(2px, 0.3cqw); align-items: center; }
+.counter {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: max(14px, 1.9cqw);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  line-height: 1;
+  white-space: nowrap;
+}
+.topic { font-size: max(9px, 0.82cqw); font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); line-height: 1.2; }
+
+/* Cronômetro circular */
+.timer { --t-col: var(--muted); position: relative; width: max(72px, 7.4cqw); aspect-ratio: 1; color: var(--t-col); }
+.timer[data-state="run"] { --t-col: var(--ink); }
+.timer[data-state="out"] { --t-col: var(--bad-text); }
+.timer svg { width: 100%; height: 100%; display: block; transform: rotate(-90deg); }
+.timer .track { stroke: var(--line); }
+.timer .arc { stroke: var(--t-col); transition: stroke-dashoffset 0.12s linear; }
+.timer-read { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.timer-num { font-family: var(--font-display); font-weight: 900; font-size: max(28px, 3.5cqw); line-height: 0.85; font-variant-numeric: tabular-nums; }
+.timer-label { font-size: max(7px, 0.62cqw); font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; margin-top: max(2px, 0.25cqw); }
+
+/* ---------- Pergunta e alternativas ---------- */
+.qtext { font-weight: 800; font-size: max(23px, 3.4cqw); line-height: 1.06; letter-spacing: -0.015em; text-wrap: balance; }
+.opts { list-style: none; padding: 0; display: grid; gap: max(10px, 1cqw); }
+@media (min-width: 720px) { .opts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.opt {
+  --o-bg: var(--surface); --o-bd: var(--line-strong); --o-bs: solid; --o-ink: var(--ink);
+  --s-bg: var(--seal); --s-ink: var(--seal-ink);
+  width: 100%;
+  height: 100%;
+  min-height: max(64px, 5cqw);
+  display: flex;
+  align-items: center;
+  gap: max(12px, 1.4cqw);
+  padding: max(10px, 1cqw) max(16px, 1.8cqw) max(10px, 1cqw) max(10px, 1cqw);
+  background: var(--o-bg);
+  border: max(2px, 0.16cqw) var(--o-bs) var(--o-bd);
+  color: var(--o-ink);
+  text-align: left;
+  cursor: pointer;
+}
+.opt:hover:not(:disabled) { border-color: var(--ink); }
+.opt:disabled { cursor: default; }
+.opt.is-idle { --o-bs: dashed; --s-bg: var(--line); --s-ink: var(--muted); }
+.opt.is-ok { --o-bg: var(--ok); --o-bd: var(--ok); --o-ink: var(--on-state); --s-bg: var(--on-state); --s-ink: var(--ok); }
+.opt.is-bad { --o-bg: var(--bad); --o-bd: var(--bad); --o-ink: var(--on-state); --s-bg: var(--on-state); --s-ink: var(--bad); }
+.opt.is-dim { --o-bd: var(--line); opacity: 0.3; }
+.diamond { position: relative; flex: none; width: max(46px, 4.2cqw); aspect-ratio: 1; }
+.diamond::before { content: ""; position: absolute; inset: 14.6%; background: var(--s-bg); transform: rotate(45deg); }
+.diamond span {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--s-ink);
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: max(22px, 2.2cqw);
+}
+.opt-text { flex: 1; min-width: 0; font-size: max(19px, 2.1cqw); font-weight: 700; line-height: 1.15; }
+.opt-mark { flex: none; font-size: max(28px, 3.2cqw); font-weight: 900; line-height: 1; }
+
+/* Resultado */
+.result { --r-bg: var(--line-strong); --r-text: var(--ink); display: flex; align-items: stretch; gap: max(12px, 1.4cqw); padding-top: max(4px, 0.4cqw); }
+.result[data-kind="ok"] { --r-bg: var(--ok); --r-text: var(--ok-text); }
+.result[data-kind="bad"] { --r-bg: var(--bad); --r-text: var(--bad-text); }
+.result-sym {
+  flex: none;
+  width: max(56px, 5cqw);
+  min-height: max(56px, 5cqw);
+  background: var(--r-bg);
+  color: var(--on-state);
+  display: grid;
+  place-items: center;
+  font-size: max(30px, 3.2cqw);
+  font-weight: 900;
+}
+.result-body { display: flex; flex-direction: column; gap: max(4px, 0.4cqw); justify-content: center; min-width: 0; }
+.result-title { font-weight: 900; font-size: max(21px, 2.4cqw); color: var(--r-text); line-height: 1.1; }
+.result-expl { font-size: max(15px, 1.4cqw); line-height: 1.35; max-width: 58em; text-wrap: pretty; }
+
+/* ---------- Painel do apresentador ---------- */
+.deck {
+  margin-top: auto;
+  background: var(--deck);
+  border-top: 2px solid var(--line);
+  padding-block: max(12px, 1cqw);
+  display: flex;
+  flex-direction: column;
+  gap: max(10px, 0.7cqw);
+}
+.deck-main { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: max(14px, 1.2cqw) max(16px, 2cqw); }
+.deck-text { flex: 1 1 min(100%, 640px); display: flex; flex-direction: column; gap: max(6px, 0.5cqw); min-width: 0; }
+.deck-tag {
+  align-self: flex-start;
+  font-size: max(10px, 0.72cqw);
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border: 1.5px solid var(--line-strong);
+  padding: 3px 8px;
+}
+.deck-prompt { display: flex; align-items: center; gap: max(10px, 0.8cqw); }
+.turn-sq { flex: none; width: max(14px, 1.1cqw); aspect-ratio: 1; background: var(--turn, transparent); }
+.prompt { font-weight: 800; font-size: max(19px, 1.75cqw); line-height: 1.15; }
+.deck-hint { font-size: max(13px, 0.9cqw); color: var(--muted); line-height: 1.35; }
+.deck-btns { display: flex; flex-wrap: wrap; gap: max(8px, 0.7cqw); }
+.tools { display: flex; flex-wrap: wrap; gap: 8px max(18px, 1.8cqw); padding-top: max(8px, 0.6cqw); border-top: 1px solid var(--line); }
+
+/* ---------- Fim de jogo ---------- */
+.end-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: max(24px, 3cqw);
+  padding-block: max(32px, 4cqw);
+  text-align: center;
+}
+.end-head { display: flex; align-items: center; gap: max(10px, 1cqw); }
+.end-title { font-size: max(56px, 9cqw); line-height: 0.84; color: var(--title, var(--ink)); text-wrap: balance; }
+.end-title[data-win="a"] { --title: var(--ta-text); }
+.end-title[data-win="b"] { --title: var(--tb-text); }
+.final { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: max(12px, 2cqw); width: 100%; max-width: max(300px, 60cqw); padding-top: max(14px, 1.4cqw); }
+.final .panel { align-items: center; justify-content: flex-start; padding: max(20px, 2.4cqw) max(12px, 2cqw) max(16px, 2cqw); gap: max(8px, 1cqw); }
+.final .panel-name { font-size: max(17px, 2.4cqw); }
+.final .panel-score { font-size: max(72px, 13cqw); line-height: 0.8; margin: 0; }
+.final .pts { font-size: max(11px, 0.9cqw); font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--p-name); }
+.final .sticker { top: 0; left: 50%; right: auto; transform: translate(-50%, -55%); font-size: max(18px, 2.2cqw); padding: 0.15em 0.5em; text-transform: uppercase; white-space: nowrap; }
+.end-wrap .btn.big { padding: 0 max(28px, 3cqw); height: max(56px, 4.4cqw); font-size: max(22px, 2cqw); }
+
+@media (prefers-reduced-motion: reduce) { .timer .arc { transition: none; } }
+</style>
+
+<div class="app">
+  <div class="kente" aria-hidden="true"></div>
+  <div class="teeth" aria-hidden="true"></div>
+
+  <!-- Preparação -->
+  <section class="screen" id="setup">
+    <div class="setup-grid pad">
+      <div class="intro">
+        <div class="brand">
+          <div class="seal" aria-hidden="true">CEPESM<img class="logo" src="logo.png" alt=""></div>
+          <div class="brand-text">
+            <p class="brand-name">Colégio Estadual Professora Evangelina Soares de Moura</p>
+            <p class="label">Dia da Consciência Negra · 20 de novembro</p>
+          </div>
+        </div>
+        <h1 class="title display">Passa ou<br>Repassa</h1>
+        <ol class="rules">
+          <li><span class="n">1</span><span class="t">A equipe que apertar o botão primeiro ganha a vez de responder.</span></li>
+          <li><span class="n">2</span><span class="t">Quem tem a vez pode responder ou passar. Quem recebe pode responder ou repassar.</span></li>
+          <li><span class="n">3</span><span class="t">Quem recebe o repasse tem que responder.</span></li>
+        </ol>
+      </div>
+
+      <div class="card">
+        <div class="resume" id="resume" hidden>
+          <div>
+            <p class="resume-title">Existe um jogo salvo</p>
+            <p class="resume-text" id="resume-text"></p>
+          </div>
+          <button class="btn" id="btn-resume" type="button">Continuar o jogo</button>
+        </div>
+        <fieldset class="fields">
+          <div class="field">
+            <label class="label" for="team-a">Equipe 1</label>
+            <div class="field-box team" data-team="a"><span class="sq"></span><input id="team-a" type="text" maxlength="28" value="Equipe Amarela"></div>
+          </div>
+          <div class="field">
+            <label class="label" for="team-b">Equipe 2</label>
+            <div class="field-box team" data-team="b"><span class="sq"></span><input id="team-b" type="text" maxlength="28" value="Equipe Azul"></div>
+          </div>
+        </fieldset>
+        <fieldset class="fields two">
+          <div class="field">
+            <label class="label" for="pts">Pontos por acerto</label>
+            <div class="field-box"><input id="pts" type="number" min="1" max="1000" value="10" inputmode="numeric"></div>
+          </div>
+          <div class="field">
+            <label class="label" for="secs">Segundos para responder</label>
+            <div class="field-box"><input id="secs" type="number" min="0" max="120" value="20" inputmode="numeric"></div>
+          </div>
+        </fieldset>
+        <div class="checks">
+          <label class="check" for="steal"><input type="checkbox" id="steal" checked><span class="box" aria-hidden="true">✓</span>Quem erra dá os pontos para a outra equipe</label>
+          <label class="check" for="shuffle"><input type="checkbox" id="shuffle"><span class="box" aria-hidden="true">✓</span>Embaralhar perguntas</label>
+          <label class="check" for="speak"><input type="checkbox" id="speak" checked><span class="box" aria-hidden="true">✓</span>Ler com a voz do navegador quando não houver áudio gravado</label>
+        </div>
+        <button class="btn pri big" id="btn-start" type="button">Começar o jogo</button>
+        <p class="setup-hint">Segundos em 0 desliga o cronômetro. Teclas no jogo: 1 e 2 marcam a equipe, A B C D a resposta, P passa, R repete a pergunta.</p>
+        <div class="offline" id="offline" hidden>
+          <p class="offline-text" id="offline-status"></p>
+          <button class="btn" id="btn-install" type="button" hidden>Instalar o jogo</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Jogo -->
+  <section class="screen" id="game" hidden>
+    <div class="stage pad">
+      <div class="board">
+        <div class="panel" id="team-0" data-team="a">
+          <div class="panel-top"><span class="panel-name" id="name-0"></span><span class="vez" id="chip-0" hidden>Vez</span></div>
+          <div class="panel-bottom">
+            <span class="panel-score" id="score-0">0</span>
+            <div class="adjs">
+              <button class="adj" id="minus-0" type="button" aria-label="Tirar pontos da equipe 1">−</button>
+              <button class="adj" id="plus-0" type="button" aria-label="Dar pontos para a equipe 1">+</button>
+            </div>
+          </div>
+          <span class="sticker" id="gain-0" hidden>+10</span>
+        </div>
+
+        <div class="mid">
+          <div class="mid-head">
+            <div class="seal" style="--size: max(34px, 3.4cqw)" aria-hidden="true">CEPESM<img class="logo" src="logo.png" alt=""></div>
+            <div class="mid-text">
+              <span class="counter" id="counter">Pergunta 1 de 30</span>
+              <span class="topic" id="topic"></span>
+            </div>
+          </div>
+          <div class="timer" id="timer" data-state="idle">
+            <svg viewBox="0 0 100 100" aria-hidden="true">
+              <circle class="track" cx="50" cy="50" r="44" fill="none" stroke-width="9"></circle>
+              <circle class="arc" id="timer-arc" cx="50" cy="50" r="44" fill="none" stroke-width="9" stroke-dasharray="276.46" stroke-dashoffset="0"></circle>
+            </svg>
+            <div class="timer-read"><span class="timer-num" id="timer-num">20</span><span class="timer-label" id="timer-label">aguarde</span></div>
+          </div>
+        </div>
+
+        <div class="panel" id="team-1" data-team="b">
+          <div class="panel-top"><span class="panel-name" id="name-1"></span><span class="vez" id="chip-1" hidden>Vez</span></div>
+          <div class="panel-bottom">
+            <span class="panel-score" id="score-1">0</span>
+            <div class="adjs">
+              <button class="adj" id="minus-1" type="button" aria-label="Tirar pontos da equipe 2">−</button>
+              <button class="adj" id="plus-1" type="button" aria-label="Dar pontos para a equipe 2">+</button>
+            </div>
+          </div>
+          <span class="sticker" id="gain-1" hidden>+10</span>
+        </div>
+      </div>
+
+      <h2 class="qtext" id="qtext" tabindex="-1"></h2>
+      <ol class="opts" id="opts"></ol>
+
+      <div class="result" id="result" aria-live="polite" hidden>
+        <div class="result-sym" id="r-sym" aria-hidden="true"></div>
+        <div class="result-body">
+          <p class="result-title" id="verdict"></p>
+          <p class="result-expl" id="why"></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="deck pad">
+      <div class="deck-main">
+        <div class="deck-text">
+          <span class="deck-tag">Apresentador</span>
+          <div class="deck-prompt"><span class="turn-sq" id="turn-sq" hidden></span><p class="prompt" id="prompt"></p></div>
+          <p class="deck-hint" id="ctl-hint"></p>
+        </div>
+        <div class="deck-btns" id="ctl-buzz">
+          <button class="btn ta" id="buzz-0" type="button"></button>
+          <button class="btn tb" id="buzz-1" type="button"></button>
+          <button class="btn" id="btn-skip" type="button">Ninguém apertou</button>
+        </div>
+        <div class="deck-btns" id="ctl-turn" hidden>
+          <button class="btn pri" id="btn-pass" type="button">Passar</button>
+          <button class="btn" id="btn-none" type="button">Não respondeu</button>
+          <button class="btn" id="btn-back" type="button">Voltar</button>
+        </div>
+        <div class="deck-btns" id="ctl-done" hidden>
+          <button class="btn pri" id="btn-next" type="button">Próxima pergunta</button>
+        </div>
+      </div>
+      <div class="tools">
+        <button class="tool" id="btn-replay" type="button">Ouvir a pergunta de novo</button>
+        <button class="tool" id="btn-sound" type="button">Som: ligado</button>
+        <button class="tool" id="btn-full" type="button">Tela cheia</button>
+        <button class="tool" id="btn-end" type="button">Encerrar jogo</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Fim de jogo -->
+  <section class="screen" id="end" hidden>
+    <div class="end-wrap pad">
+      <div class="end-head">
+        <div class="seal" style="--size: max(40px, 3.6cqw)" aria-hidden="true">CEPESM<img class="logo" src="logo.png" alt=""></div>
+        <p class="label">Fim de jogo</p>
+      </div>
+      <h1 class="end-title display" id="end-title" tabindex="-1"></h1>
+      <div class="final">
+        <div class="panel" id="end-0" data-team="a">
+          <span class="sticker" id="end-first-0" hidden>1º lugar</span>
+          <span class="panel-name" id="end-name-0"></span>
+          <span class="panel-score" id="end-score-0">0</span>
+          <span class="pts">pontos</span>
+        </div>
+        <div class="panel" id="end-1" data-team="b">
+          <span class="sticker" id="end-first-1" hidden>1º lugar</span>
+          <span class="panel-name" id="end-name-1"></span>
+          <span class="panel-score" id="end-score-1">0</span>
+          <span class="pts">pontos</span>
+        </div>
+      </div>
+      <button class="btn pri big" id="btn-new" type="button">Novo jogo</button>
+    </div>
+  </section>
+</div>
+
+<script>
+/*DATA*/
+const T = ["História e resistência", "Cultura afro-brasileira", "Representatividade", "Personalidades", "No dia a dia"];
+
+// t: tema, q: pergunta, o: alternativas, c: índice da correta, e: explicação
+const Q = [
+  { t: 0, q: "Em qual data é celebrado o Dia da Consciência Negra?",
+    o: ["13 de maio", "20 de novembro", "7 de setembro", "15 de novembro"], c: 1,
+    e: "O 20 de novembro é o Dia Nacional de Zumbi e da Consciência Negra. Desde 2024 é feriado em todo o Brasil." },
+  { t: 0, q: "A data de 20 de novembro faz referência à morte de quem?",
+    o: ["Machado de Assis", "Nelson Mandela", "Zumbi dos Palmares", "Milton Santos"], c: 2,
+    e: "Zumbi foi morto em 20 de novembro de 1695. A data foi escolhida para lembrar a sua luta." },
+  { t: 0, q: "Em que ano Zumbi dos Palmares morreu?",
+    o: ["1888", "1695", "1822", "1500"], c: 1,
+    e: "Zumbi morreu em 1695, um ano depois do ataque que destruiu a principal aldeia de Palmares." },
+  { t: 0, q: "O que Zumbi dos Palmares representa na história brasileira?",
+    o: ["A luta pela liberdade e resistência contra a escravidão", "A criação da literatura brasileira", "A abolição da escravidão", "A fundação da Academia Brasileira de Letras"], c: 0,
+    e: "Zumbi virou símbolo da resistência negra. A abolição só veio em 1888, quase dois séculos depois da sua morte." },
+  { t: 0, q: "O que o Dia da Consciência Negra busca valorizar?",
+    o: ["Apenas a história europeia", "Somente a cultura musical", "A cultura, a história e as contribuições do povo negro", "Apenas os acontecimentos políticos"], c: 2,
+    e: "A data lembra a luta do povo negro e celebra tudo o que ele construiu no Brasil." },
+  { t: 0, q: "O que significa racismo estrutural?",
+    o: ["Uma brincadeira entre pessoas", "Uma desigualdade presente nas estruturas e relações da sociedade", "Uma tradição cultural", "Uma forma de manifestação artística"], c: 1,
+    e: "O racismo estrutural não depende só de atitudes individuais. Ele aparece nas diferenças de renda, de emprego, de escolaridade e de tratamento." },
+  { t: 0, q: "Quando aconteceu a abolição da escravidão no Brasil?",
+    o: ["20 de novembro de 1695", "15 de novembro de 1889", "13 de maio de 1888", "7 de setembro de 1822"], c: 2,
+    e: "A Lei Áurea foi assinada pela princesa Isabel em 13 de maio de 1888. O Brasil foi o último país das Américas a abolir a escravidão." },
+  { t: 0, q: "A abolição da escravidão garantiu igualdade de oportunidades para a população negra?",
+    o: ["Sim, completamente", "Não, as desigualdades continuaram", "Sim, apenas nas cidades", "Não, porque a escravidão continuou legalmente"], c: 1,
+    e: "A Lei Áurea não garantiu terra, trabalho nem escola para quem foi libertado. Por isso as desigualdades continuaram." },
+  { t: 0, q: "O que eram os quilombos?",
+    o: ["Escolas de literatura", "Espaços de resistência, liberdade e organização comunitária", "Locais de comércio europeu", "Palácios dos governantes"], c: 1,
+    e: "Os quilombos eram comunidades formadas por pessoas que escaparam da escravidão. Palmares, na Serra da Barriga, hoje Alagoas, foi o maior deles." },
+  { t: 0, q: "Quem foi Dandara dos Palmares?",
+    o: ["Uma escritora brasileira", "Uma atriz pioneira", "Uma guerreira que lutou pela liberdade e pela defesa de Palmares", "Uma jogadora de futebol"], c: 2,
+    e: "Dandara é lembrada como guerreira de Palmares e companheira de Zumbi. Desde 2019 seu nome está no Livro dos Heróis e Heroínas da Pátria." },
+
+  { t: 1, q: "Qual destas manifestações culturais tem origem e forte influência africana?",
+    o: ["Capoeira", "Valsa europeia", "Balé clássico francês", "Ópera italiana"], c: 0,
+    e: "A capoeira foi criada no Brasil por africanos escravizados e mistura luta, dança e música. A roda de capoeira é Patrimônio Cultural da Humanidade pela Unesco." },
+  { t: 1, q: "Qual destes ritmos faz parte da cultura afro-brasileira?",
+    o: ["Samba", "Tango argentino", "Valsa vienense", "Flamenco espanhol"], c: 0,
+    e: "O samba nasceu nas rodas das comunidades negras da Bahia e do Rio de Janeiro." },
+  { t: 1, q: "Qual destas comidas é uma contribuição da culinária afro-brasileira?",
+    o: ["Acarajé", "Croissant", "Sushi", "Pizza italiana"], c: 0,
+    e: "O acarajé é um bolinho de feijão-fradinho frito no azeite de dendê, tradição das baianas." },
+  { t: 1, q: "Quais religiões fazem parte das tradições religiosas afro-brasileiras?",
+    o: ["Budismo e Hinduísmo", "Candomblé e Umbanda", "Judaísmo e Cristianismo", "Xintoísmo e Taoísmo"], c: 1,
+    e: "O Candomblé preserva tradições trazidas da África. A Umbanda nasceu no Brasil, unindo influências africanas, indígenas, católicas e espíritas." },
+  { t: 1, q: "A cultura afro-brasileira está presente em quais áreas?",
+    o: ["Somente na música", "Somente na culinária", "Na música, dança, culinária, religião, linguagem e arte", "Apenas na literatura"], c: 2,
+    e: "A influência africana está até no jeito de falar: palavras como moleque, caçula e quitanda vieram de línguas africanas." },
+
+  { t: 2, q: "O que significa representatividade negra?",
+    o: ["A presença e valorização de pessoas negras nos diferentes espaços da sociedade", "A participação exclusiva na música", "A separação das pessoas por origem", "A valorização de apenas uma profissão"], c: 0,
+    e: "Representatividade é ver pessoas negras na política, na ciência, na TV, nos livros e em todos os outros espaços." },
+  { t: 2, q: "Por que a representatividade é importante?",
+    o: ["Para aumentar o preconceito", "Para fortalecer a autoestima e combater a discriminação", "Para limitar oportunidades", "Para apagar a história"], c: 1,
+    e: "Quem se vê representado entende que também pode ocupar aquele lugar." },
+
+  { t: 3, q: "Quem foi o líder do Quilombo dos Palmares?",
+    o: ["Pelé", "Machado de Assis", "Zumbi dos Palmares", "Lázaro Ramos"], c: 2,
+    e: "Zumbi assumiu a liderança de Palmares depois de Ganga Zumba e comandou a resistência até 1695." },
+  { t: 3, q: "Quem foi o fundador e primeiro presidente da Academia Brasileira de Letras?",
+    o: ["Machado de Assis", "Milton Santos", "Nelson Mandela", "Carolina Maria de Jesus"], c: 0,
+    e: "Machado de Assis ajudou a fundar a Academia Brasileira de Letras em 1897 e foi seu primeiro presidente. Escreveu Dom Casmurro e Memórias Póstumas de Brás Cubas." },
+  { t: 3, q: "Qual escritora ficou conhecida pela obra Quarto de Despejo?",
+    o: ["Conceição Evaristo", "Carolina Maria de Jesus", "Ruth de Souza", "Marta Vieira"], c: 1,
+    e: "Quarto de Despejo, de 1960, é o diário de Carolina Maria de Jesus sobre a vida na favela do Canindé, em São Paulo." },
+  { t: 3, q: "Qual escritora desenvolveu o conceito de escrevivência?",
+    o: ["Carolina Maria de Jesus", "Conceição Evaristo", "Dandara dos Palmares", "Ruth de Souza"], c: 1,
+    e: "Para Conceição Evaristo, escrevivência é escrever a partir da vivência das mulheres negras. Ela é autora de Ponciá Vicêncio e Olhos d'Água." },
+  { t: 3, q: "Quem foi uma atriz pioneira na representatividade negra no teatro, cinema e televisão?",
+    o: ["Marta Vieira", "Ruth de Souza", "Carolina Maria de Jesus", "Conceição Evaristo"], c: 1,
+    e: "Ruth de Souza foi a primeira atriz negra a se apresentar no Theatro Municipal do Rio de Janeiro, em 1945." },
+  { t: 3, q: "Qual personalidade negra utiliza a arte e a literatura para promover o debate racial?",
+    o: ["Lázaro Ramos", "Pelé", "Machado de Assis", "Nelson Mandela"], c: 0,
+    e: "Lázaro Ramos é ator, diretor e escritor. No livro Na Minha Pele, ele fala sobre identidade e racismo." },
+  { t: 3, q: "Qual foi a área de destaque de Milton Santos?",
+    o: ["Medicina", "Geografia", "Futebol", "Música"], c: 1,
+    e: "Milton Santos foi um dos maiores geógrafos do mundo. Em 1994 recebeu o Prêmio Vautrin Lud, o mais importante da Geografia." },
+  { t: 3, q: "Nelson Mandela lutou contra qual regime?",
+    o: ["Colonialismo português no Brasil", "Apartheid na África do Sul", "Escravidão no Quilombo dos Palmares", "Ditadura militar brasileira"], c: 1,
+    e: "Mandela passou 27 anos preso por lutar contra o apartheid. Em 1994 tornou-se o primeiro presidente negro da África do Sul." },
+  { t: 3, q: "Quem foi considerado um dos maiores jogadores de futebol da história?",
+    o: ["Milton Santos", "Lázaro Ramos", "Pelé", "Machado de Assis"], c: 2,
+    e: "Pelé é o único jogador a ganhar três Copas do Mundo: 1958, 1962 e 1970." },
+  { t: 3, q: "Quantas vezes Marta foi eleita a melhor jogadora de futebol do mundo?",
+    o: ["Duas vezes", "Quatro vezes", "Seis vezes", "Oito vezes"], c: 2,
+    e: "Marta foi eleita a melhor do mundo pela Fifa seis vezes: de 2006 a 2010 e em 2018." },
+  { t: 3, q: "O que a trajetória de Marta representa?",
+    o: ["Apenas o sucesso individual", "Uma referência esportiva e a luta pela igualdade de gênero", "A história da literatura brasileira", "A luta contra o apartheid"], c: 1,
+    e: "Marta é a maior artilheira da seleção brasileira e defende condições iguais para as mulheres no futebol." },
+
+  { t: 4, q: "A consciência negra deve ser praticada quando?",
+    o: ["Somente em novembro", "Apenas nas escolas", "Todos os dias", "Somente em feriados"], c: 2,
+    e: "Respeito e valorização da história negra são para o ano inteiro. O 20 de novembro é o dia de lembrar isso." },
+  { t: 4, q: "Qual atitude contribui para uma sociedade mais justa e sem racismo?",
+    o: ["Ignorar as diferenças", "Reproduzir preconceitos", "Respeitar a diversidade e valorizar a cultura negra", "Desvalorizar a história afro-brasileira"], c: 2,
+    e: "Combater o racismo começa por respeitar as diferenças, conhecer a história e não aceitar o preconceito." }
+];
+
+const L = ["A", "B", "C", "D"];
+
+// Textos falados: são os mesmos do roteiro em audio/roteiro-audios.csv
+function perguntaText(q) {
+  return q.q + " " + q.o.map((t, i) => "Letra " + L[i] + ": " + t + ".").join(" ");
+}
+function respostaText(q) {
+  return "Resposta certa: letra " + L[q.c] + ", " + q.o[q.c] + ". " + q.e;
+}
+/*END-DATA*/
+
+const KEY = "passa-ou-repassa-evangelina";
+const ARC = 276.46;
+const $ = (id) => document.getElementById(id);
+const SCREENS = ["setup", "game", "end"];
+let S = null;          // estado do jogo em andamento
+let soundOn = true;
+
+function cur() { return Q[S.order[S.pos]]; }
+function show(name) { SCREENS.forEach((s) => { $(s).hidden = s !== name; }); }
+
+/* ---------- Jogo salvo ---------- */
+function valid(d) {
+  return !!d && Array.isArray(d.order) && d.order.length === Q.length &&
+    Array.isArray(d.teams) && d.teams.length === 2 && !!d.cfg && typeof d.pos === "number";
+}
+function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+function forget() { try { localStorage.removeItem(KEY); } catch (e) {} }
+function loadSaved() {
+  try {
+    const d = JSON.parse(localStorage.getItem(KEY));
+    return valid(d) && d.screen === "game" ? d : null;
+  } catch (e) { return null; }
+}
+
+/* ---------- Som ---------- */
+let ac = null;
+function tone(freq, start, dur, type, vol) {
+  const o = ac.createOscillator();
+  const g = ac.createGain();
+  const t0 = ac.currentTime + start;
+  o.type = type;
+  o.frequency.value = freq;
+  g.gain.setValueAtTime(vol, t0);
+  g.gain.exponentialRampToValueAtTime(0.001, t0 + dur);
+  o.connect(g);
+  g.connect(ac.destination);
+  o.start(t0);
+  o.stop(t0 + dur);
+}
+function sfx(name) {
+  if (!soundOn) return;
+  try {
+    ac = ac || new (window.AudioContext || window.webkitAudioContext)();
+    if (ac.state === "suspended") ac.resume();
+    if (name === "buzz") tone(880, 0, 0.2, "square", 0.12);
+    else if (name === "pass") { tone(520, 0, 0.12, "triangle", 0.2); tone(390, 0.12, 0.18, "triangle", 0.2); }
+    else if (name === "right") { tone(660, 0, 0.15, "triangle", 0.25); tone(880, 0.13, 0.15, "triangle", 0.25); tone(1320, 0.26, 0.4, "triangle", 0.25); }
+    else if (name === "wrong") { tone(150, 0, 0.7, "sawtooth", 0.2); tone(110, 0, 0.7, "sawtooth", 0.2); }
+  } catch (e) {}
+}
+
+let clip = null;
+let voiceTimer = null;
+function stopVoice() {
+  clearTimeout(voiceTimer);
+  if (clip) { const c = clip; clip = null; c.pause(); }
+  try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) {}
+}
+function speak(text) {
+  if (!S || !S.cfg.speak) return;
+  try {
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = "pt-BR";
+    const v = window.speechSynthesis.getVoices().find((x) => x.lang && x.lang.toLowerCase().replace("_", "-").indexOf("pt-br") === 0);
+    if (v) u.voice = v;
+    window.speechSynthesis.speak(u);
+  } catch (e) {}
+}
+// Toca audio/pergunta-07.mp3 ou audio/resposta-07.mp3; sem o arquivo, lê com a voz do navegador
+function say(kind, delay) {
+  stopVoice();
+  if (!soundOn || !S) return;
+  const qi = S.order[S.pos];
+  const text = kind === "pergunta" ? perguntaText(Q[qi]) : respostaText(Q[qi]);
+  const file = "audio/" + kind + "-" + String(qi + 1).padStart(2, "0") + ".mp3";
+  voiceTimer = setTimeout(() => {
+    const a = new Audio(file);
+    clip = a;
+    const fallback = () => { if (clip !== a) return; clip = null; speak(text); };
+    a.addEventListener("error", fallback);
+    const p = a.play();
+    if (p && p.catch) p.catch(fallback);
+  }, delay || 0);
+}
+
+/* ---------- Cronômetro ---------- */
+let tick = null;
+let deadline = 0;
+let timeLeft = null;   // segundos restantes na vez atual; null antes de alguém apertar
+let timedOut = false;
+
+const TIMER_LABEL = { idle: "aguarde", run: "segundos", out: "esgotado", stop: "parado" };
+function paintTimer(mode) {
+  const box = $("timer");
+  const secs = S.cfg.secs;
+  box.hidden = !secs;
+  if (!secs) return;
+  const left = mode === "idle" || timeLeft === null ? secs : Math.max(0, timeLeft);
+  box.dataset.state = mode;
+  $("timer-num").textContent = Math.ceil(left);
+  $("timer-label").textContent = TIMER_LABEL[mode];
+  $("timer-arc").style.strokeDashoffset = ARC * (1 - left / secs);
+}
+function stopTimer() {
+  if (tick) { clearInterval(tick); tick = null; }
+}
+function startTimer() {
+  stopTimer();
+  timedOut = false;
+  if (!S.cfg.secs) return;
+  deadline = Date.now() + S.cfg.secs * 1000;
+  const update = () => {
+    timeLeft = (deadline - Date.now()) / 1000;
+    if (timeLeft <= 0) {
+      timeLeft = 0;
+      stopTimer();
+      timedOut = true;
+      paintTimer("out");
+      renderDeck();
+      sfx("wrong");
+    } else {
+      paintTimer("run");
+    }
+  };
+  update();
+  tick = setInterval(update, 100);
+}
+
+/* ---------- Tela do jogo ---------- */
+function renderBoard() {
+  const done = S.phase === "done";
+  [0, 1].forEach((t) => {
+    const team = S.teams[t];
+    const hasTurn = S.phase === "turn" && S.turn === t;
+    $("name-" + t).textContent = team.name;
+    $("score-" + t).textContent = team.score;
+    $("buzz-" + t).textContent = team.name;
+    $("team-" + t).classList.toggle("is-turn", hasTurn);
+    $("chip-" + t).hidden = !hasTurn;
+    const gain = $("gain-" + t);
+    gain.hidden = !(done && S.gain === t);
+    gain.textContent = "+" + S.cfg.pts;
+  });
+}
+
+function renderDeck() {
+  const name = S.turn !== null ? S.teams[S.turn].name : "";
+  const H = "Clique na alternativa que a equipe escolheu ou use as teclas A, B, C e D.";
+  let prompt, hint;
+  if (S.phase === "buzz") {
+    prompt = "Quem apertou primeiro?";
+    hint = "Teclas 1 e 2 marcam a equipe.";
+  } else if (S.phase === "turn") {
+    if (timedOut) prompt = "Tempo esgotado! " + name + " tem que responder.";
+    else if (S.stage === 0) prompt = name + ": responde ou passa?";
+    else if (S.stage === 1) prompt = "Passou! " + name + ": responde ou repassa?";
+    else prompt = "Repassou! " + name + " tem que responder.";
+    hint = H + (timedOut || S.stage >= 2 ? "" : S.stage === 0 ? " P passa a vez." : " P repassa a vez.");
+    $("btn-pass").hidden = timedOut || S.stage >= 2;
+    $("btn-pass").textContent = S.stage === 0 ? "Passar" : "Repassar";
+    $("btn-none").className = timedOut || S.stage >= 2 ? "btn pri" : "btn";
+  } else {
+    const last = S.pos === Q.length - 1;
+    prompt = "Pergunta " + (S.pos + 1) + " encerrada.";
+    hint = last ? "Enter mostra o placar final." : "Enter vai para a próxima pergunta.";
+    $("btn-next").textContent = last ? "Ver o placar final" : "Próxima pergunta";
+  }
+  $("prompt").textContent = prompt;
+  $("ctl-hint").textContent = hint;
+  const sq = $("turn-sq");
+  sq.hidden = S.phase !== "turn";
+  sq.style.setProperty("--turn", S.turn === 1 ? "var(--tb)" : "var(--ta)");
+  $("ctl-buzz").hidden = S.phase !== "buzz";
+  $("ctl-turn").hidden = S.phase !== "turn";
+  $("ctl-done").hidden = S.phase !== "done";
+}
+
+function render() {
+  const q = cur();
+  const done = S.phase === "done";
+
+  renderBoard();
+  $("counter").textContent = "Pergunta " + (S.pos + 1) + " de " + Q.length;
+  $("topic").textContent = T[q.t];
+  $("qtext").textContent = q.q;
+  paintTimer(S.phase === "buzz" ? "idle" : done ? "stop" : timedOut ? "out" : "run");
+
+  const list = $("opts");
+  list.textContent = "";
+  q.o.forEach((text, i) => {
+    const li = document.createElement("li");
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "opt";
+    b.id = "opt-" + i;
+    const dia = document.createElement("span");
+    dia.className = "diamond";
+    const letter = document.createElement("span");
+    letter.textContent = L[i];
+    dia.appendChild(letter);
+    const label = document.createElement("span");
+    label.className = "opt-text";
+    label.textContent = text;
+    const mark = document.createElement("span");
+    mark.className = "opt-mark";
+    mark.setAttribute("aria-hidden", "true");
+    if (done) {
+      b.disabled = true;
+      if (i === q.c) { b.classList.add("is-ok"); mark.textContent = "✓"; }
+      else if (i === S.picked) { b.classList.add("is-bad"); mark.textContent = "✕"; }
+      else b.classList.add("is-dim");
+    } else if (S.phase === "turn") {
+      b.addEventListener("click", () => answer(i));
+    } else {
+      b.disabled = true;
+      b.classList.add("is-idle");
+    }
+    b.append(dia, label, mark);
+    li.appendChild(b);
+    list.appendChild(li);
+  });
+
+  const result = $("result");
+  result.hidden = !done;
+  if (done) {
+    const correct = "A resposta certa é " + L[q.c] + ") " + q.o[q.c] + ".";
+    const gain = S.gain !== null ? " +" + S.cfg.pts + " para " + S.teams[S.gain].name + "." : "";
+    let kind, sym, title;
+    if (S.picked === null) { kind = "none"; sym = "!"; title = "Ninguém apertou. " + correct; }
+    else if (S.picked === q.c) { kind = "ok"; sym = "✓"; title = "Certo!" + gain; }
+    else if (S.picked === -1) { kind = "bad"; sym = "✕"; title = "Sem resposta. " + correct + gain; }
+    else { kind = "bad"; sym = "✕"; title = "Errado. " + correct + gain; }
+    result.dataset.kind = kind;
+    $("r-sym").textContent = sym;
+    $("verdict").textContent = title;
+    $("why").textContent = q.e;
+  }
+
+  renderDeck();
+}
+
+function buzz(t) {
+  if (S.phase !== "buzz") return;
+  S.phase = "turn";
+  S.turn = t;
+  S.stage = 0;
+  save();
+  startTimer();
+  render();
+  sfx("buzz");
+}
+function pass() {
+  if (S.phase !== "turn" || S.stage >= 2 || timedOut) return;
+  S.stage++;
+  S.turn = 1 - S.turn;
+  save();
+  startTimer();
+  render();
+  sfx("pass");
+}
+function back() {
+  if (S.phase !== "turn") return;
+  if (S.stage > 0) { S.stage--; S.turn = 1 - S.turn; startTimer(); }
+  else { S.phase = "buzz"; S.turn = null; stopTimer(); timeLeft = null; timedOut = false; }
+  save();
+  render();
+}
+// i: 0 a 3 é a alternativa escolhida; -1 é "não respondeu", que conta como erro
+function answer(i) {
+  if (S.phase !== "turn") return;
+  stopTimer();
+  const ok = i === cur().c;
+  S.picked = i;
+  if (ok) { S.teams[S.turn].score += S.cfg.pts; S.gain = S.turn; }
+  else if (S.cfg.steal) { S.teams[1 - S.turn].score += S.cfg.pts; S.gain = 1 - S.turn; }
+  else S.gain = null;
+  S.phase = "done";
+  save();
+  render();
+  sfx(ok ? "right" : "wrong");
+  say("resposta", 1000);
+  $("btn-next").focus();
+}
+function skip() {
+  if (S.phase !== "buzz") return;
+  S.picked = null;
+  S.turn = null;
+  S.gain = null;
+  S.phase = "done";
+  save();
+  render();
+  say("resposta", 300);
+  $("btn-next").focus();
+}
+function next() {
+  if (S.phase !== "done") return;
+  if (S.pos >= Q.length - 1) { finish(); return; }
+  S.pos++;
+  S.phase = "buzz";
+  S.turn = null;
+  S.stage = 0;
+  S.picked = null;
+  S.gain = null;
+  timeLeft = null;
+  timedOut = false;
+  save();
+  render();
+  say("pergunta");
+  $("qtext").focus();
+  window.scrollTo(0, 0);
+}
+function adjust(t, delta) {
+  S.teams[t].score = Math.max(0, S.teams[t].score + delta);
+  save();
+  $("score-" + t).textContent = S.teams[t].score;
+}
+
+/* ---------- Fim de jogo ---------- */
+function renderEnd() {
+  const a = S.teams[0];
+  const b = S.teams[1];
+  const tie = a.score === b.score;
+  const win = a.score > b.score ? 0 : 1;
+  const title = $("end-title");
+  title.textContent = tie ? "Empate!" : S.teams[win].name + " venceu!";
+  if (tie) delete title.dataset.win; else title.dataset.win = win === 0 ? "a" : "b";
+  [0, 1].forEach((t) => {
+    $("end-name-" + t).textContent = S.teams[t].name;
+    $("end-score-" + t).textContent = S.teams[t].score;
+    $("end-" + t).classList.toggle("is-turn", !tie && win === t);
+    $("end-first-" + t).hidden = tie || win !== t;
+  });
+}
+function finish() {
+  stopTimer();
+  stopVoice();
+  S.screen = "end";
+  forget();
+  show("end");
+  renderEnd();
+  $("end-title").focus();
+  window.scrollTo(0, 0);
+}
+
+/* ---------- Preparação ---------- */
+function showSetup() {
+  const saved = loadSaved();
+  $("resume").hidden = !saved;
+  if (saved) {
+    $("resume-text").textContent = "Pergunta " + (saved.pos + 1) + " de " + Q.length + " · " +
+      saved.teams[0].name + " " + saved.teams[0].score + " × " + saved.teams[1].score + " " + saved.teams[1].name;
+  }
+  show("setup");
+}
+function num(id, min, max, def) {
+  const n = parseInt($(id).value, 10);
+  return isNaN(n) ? def : Math.min(max, Math.max(min, n));
+}
+function begin() {
+  const order = Q.map((_, i) => i);
+  if ($("shuffle").checked) {
+    for (let i = order.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [order[i], order[j]] = [order[j], order[i]];
+    }
+  }
+  S = {
+    screen: "game",
+    teams: [
+      { name: $("team-a").value.trim() || "Equipe Amarela", score: 0 },
+      { name: $("team-b").value.trim() || "Equipe Azul", score: 0 }
+    ],
+    cfg: { pts: num("pts", 1, 1000, 10), secs: num("secs", 0, 120, 20), steal: $("steal").checked, speak: $("speak").checked },
+    order: order,
+    pos: 0,
+    phase: "buzz",
+    turn: null,
+    stage: 0,
+    picked: null,
+    gain: null
+  };
+  timeLeft = null;
+  timedOut = false;
+  save();
+  show("game");
+  render();
+  say("pergunta");
+  $("qtext").focus();
+  window.scrollTo(0, 0);
+}
+function resume(saved) {
+  S = saved;
+  timeLeft = null;
+  timedOut = false;
+  show(S.screen === "end" ? "end" : "game");
+  if (S.screen === "end") { renderEnd(); return; }
+  if (S.phase === "turn") startTimer();
+  render();
+}
+
+/* ---------- Eventos ---------- */
+document.querySelectorAll(".logo").forEach((img) => {
+  img.addEventListener("error", () => { img.hidden = true; });
+  if (img.complete && !img.naturalWidth) img.hidden = true;
+});
+
+$("btn-start").addEventListener("click", begin);
+$("btn-resume").addEventListener("click", () => { const d = loadSaved(); if (d) resume(d); });
+$("buzz-0").addEventListener("click", () => buzz(0));
+$("buzz-1").addEventListener("click", () => buzz(1));
+$("btn-skip").addEventListener("click", skip);
+$("btn-pass").addEventListener("click", pass);
+$("btn-none").addEventListener("click", () => answer(-1));
+$("btn-back").addEventListener("click", back);
+$("btn-next").addEventListener("click", next);
+$("minus-0").addEventListener("click", () => adjust(0, -S.cfg.pts));
+$("plus-0").addEventListener("click", () => adjust(0, S.cfg.pts));
+$("minus-1").addEventListener("click", () => adjust(1, -S.cfg.pts));
+$("plus-1").addEventListener("click", () => adjust(1, S.cfg.pts));
+$("btn-replay").addEventListener("click", () => say("pergunta"));
+$("btn-sound").addEventListener("click", () => {
+  soundOn = !soundOn;
+  if (!soundOn) stopVoice();
+  $("btn-sound").textContent = soundOn ? "Som: ligado" : "Som: desligado";
+});
+$("btn-full").addEventListener("click", () => {
+  try {
+    if (document.fullscreenElement) document.exitFullscreen();
+    else document.documentElement.requestFullscreen().catch(() => {});
+  } catch (e) {}
+});
+
+let endArmed = null;
+$("btn-end").addEventListener("click", () => {
+  if (endArmed) {
+    clearTimeout(endArmed);
+    endArmed = null;
+    $("btn-end").textContent = "Encerrar jogo";
+    finish();
+  } else {
+    $("btn-end").textContent = "Clique de novo para encerrar";
+    endArmed = setTimeout(() => { endArmed = null; $("btn-end").textContent = "Encerrar jogo"; }, 3000);
+  }
+});
+$("btn-new").addEventListener("click", () => { S = null; showSetup(); window.scrollTo(0, 0); });
+
+document.addEventListener("keydown", (e) => {
+  if (!S || S.screen !== "game" || e.ctrlKey || e.metaKey || e.altKey) return;
+  if (e.target instanceof HTMLInputElement) return;
+  if (e.key === "Enter") {
+    if (S.phase === "done" && !(e.target instanceof HTMLButtonElement)) next();
+    return;
+  }
+  const k = e.key.toLowerCase();
+  if (k.length !== 1) return;
+  if (S.phase === "buzz" && (k === "1" || k === "2")) buzz(k === "1" ? 0 : 1);
+  else if (S.phase === "turn" && "abcd".indexOf(k) >= 0) answer("abcd".indexOf(k));
+  else if (S.phase === "turn" && k === "p") pass();
+  else if (k === "r") say("pergunta");
+});
+
+// Mantém o jogo em andamento quando a página é atualizada para quem já está com ela aberta
+function start(saved) {
+  if (valid(saved) && saved.screen !== "setup") resume(saved);
+  else showSetup();
+}
+window.claude?.hot?.snapshot?.(() => S);
+window.claude?.hot?.ready ? window.claude.hot.ready(start) : start(window.claude?.hot?.data ?? {});
+</script>
