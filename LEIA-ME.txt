@@ -1,0 +1,42 @@
+PASSA OU REPASSA DA CONSCIÊNCIA NEGRA
+CEPESM - Colégio Estadual Professora Evangelina Soares de Moura
+
+COMO ABRIR
+Dê dois cliques em index.html. Funciona sem internet (as fontes ficam um pouco
+diferentes offline). Use o Chrome ou o Edge e ligue o som do computador na caixa.
+
+COMO JOGAR
+1. Na primeira tela, escreva o nome das duas equipes e clique em "Começar o jogo".
+2. A pergunta aparece e é lida em voz alta. As equipes disputam na máquina de botão.
+3. Marque na tela quem apertou primeiro (ou tecle 1 ou 2).
+4. A equipe responde ou passa. Se passar, a outra responde ou repassa.
+   Se repassar, a primeira equipe é obrigada a responder.
+5. Clique na alternativa que a equipe escolheu (ou tecle A, B, C ou D).
+   A página mostra a resposta certa, toca a explicação e soma os pontos.
+6. Quem acerta ganha os pontos. Quem erra dá os pontos para a outra equipe
+   (dá para desligar isso na primeira tela).
+
+TECLAS
+1 e 2 ........ equipe que apertou primeiro
+A B C D ...... resposta escolhida
+P ............ passar / repassar
+R ............ repetir o áudio da pergunta
+Enter ........ próxima pergunta
+
+Os botões + e - ao lado do placar corrigem a pontuação na mão.
+O jogo fica salvo no computador: se a página fechar sem querer, abra de novo e
+clique em "Continuar o jogo".
+
+ÁUDIOS GRAVADOS
+Enquanto não houver áudio gravado, a página lê as perguntas com a voz do navegador.
+Para usar áudios gerados por IA, salve os arquivos MP3 na pasta "audio" com estes nomes:
+
+  pergunta-01.mp3 ... pergunta-30.mp3   (pergunta + alternativas)
+  resposta-01.mp3 ... resposta-30.mp3   (resposta certa + explicação)
+
+O número é sempre o da pergunta na ordem original, mesmo com as perguntas embaralhadas.
+O texto de cada áudio está em audio/roteiro-audios.csv (abre no Excel).
+Pode gravar aos poucos: o que ainda não tiver arquivo continua na voz do navegador.
+
+BRASÃO DO COLÉGIO
+Salve a imagem do brasão nesta pasta com o nome logo.png e ela aparece na tela.
